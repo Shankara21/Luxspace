@@ -1,23 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./assets/css/app.css";
+import coffee from "./assets/images/content/image-arrived-1.png";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className="text-4xl text-red-900 font-bold"> Apakah bisa?</h1>
+      <img src={coffee} alt="" title="" />
     </div>
   );
 }
