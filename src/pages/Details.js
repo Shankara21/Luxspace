@@ -8,14 +8,17 @@ import Suggestion from "../parts/Details/Suggestion";
 import useAsync from "../helpers/hooks/useAsync";
 import { useParams } from "react-router-dom";
 import fetchData from "../helpers/fetch";
+import useScrollToTop from "../helpers/hooks/useScrollToTop";
+import Documents from "../parts/Document";
+import PageErrorMessage from "../parts/PageErrorMessage";
 
 function LoadingSlider() {
   return (
     <section className="container mx-auto">
       <div className="flex flex-wrap my-4 md:my-12">
         <div className="w-full md:hidden px-4">
-          <div class="w-80 h-16 bg-gray-300 animate-pulse rounded-full"></div>
-          <div class="w-40 h-4 bg-gray-300 animate-pulse rounded-full"></div>
+          <div className="w-80 h-16 bg-gray-300 animate-pulse rounded-full"></div>
+          <div className="w-40 h-4 bg-gray-300 animate-pulse rounded-full"></div>
         </div>
         <div className="flex-1">
           <div className="slider">
@@ -35,15 +38,15 @@ function LoadingSlider() {
             </div>
             <div className="preview">
               <div className="item rounded-lg h-full overflow-hidden">
-                <div class="item bg-gray-300 animate-pulse rounded-lg h-full overflow-hidden"></div>
+                <div className="item bg-gray-300 animate-pulse rounded-lg h-full overflow-hidden"></div>
               </div>
             </div>
           </div>
         </div>
         <div className="flex-1 px-4 md:p-6">
-          <div class="w-80 h-16 bg-gray-300 animate-pulse rounded-full"></div>
-          <div class="w-40 h-4 mt-4 bg-gray-300 animate-pulse rounded-full"></div>
-          <div class="w-44 h-10 mt-8 bg-gray-300 animate-pulse rounded-full"></div>
+          <div className="w-80 h-16 bg-gray-300 animate-pulse rounded-full"></div>
+          <div className="w-40 h-4 mt-4 bg-gray-300 animate-pulse rounded-full"></div>
+          <div className="w-44 h-10 mt-8 bg-gray-300 animate-pulse rounded-full"></div>
 
           <hr className="my-8" />
           <div className="w-36 h-4 mt-6 bg-gray-300 animate-pulse rounded-full"></div>
@@ -94,15 +97,17 @@ function LoadingSuggestion() {
 }
 
 export default function Details() {
+  useScrollToTop();
   const { idp } = useParams();
 
   const { data, error, run, isLoading, isError } = useAsync();
+  console.log(error);
 
   React.useEffect(() => {
     run(fetchData({ url: `/api/products/${idp}` }));
-  }, [run]);
+  }, [run, idp]);
   return (
-    <>
+    <Documents>
       <Header theme="black" />
       <BreadCrumb
         list={[
@@ -111,16 +116,25 @@ export default function Details() {
           { url: "/categories/912313/products/91283", name: "Details" },
         ]}
       />
-      {isLoading ? <LoadingSlider /> : <ProductsDetails data={data} />}
-      {isLoading ? (
-        <LoadingSuggestion />
+      {isError ? (
+        <PageErrorMessage
+          title="Product Not Found"
+          body={error.errors.message}
+        />
       ) : (
-        <Suggestion data={data?.relatedProducts || {}} />
+        <>
+          {isLoading ? <LoadingSlider /> : <ProductsDetails data={data} />}
+          {isLoading ? (
+            <LoadingSuggestion />
+          ) : (
+            <Suggestion data={data?.relatedProducts || {}} />
+          )}
+        </>
       )}
 
       {/* <Clients /> */}
       <Sitemap />
       <Footer />
-    </>
+    </Documents>
   );
 }

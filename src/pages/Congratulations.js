@@ -4,10 +4,11 @@ import Header from "../parts/Header";
 import Sitemap from "../parts/HomePage/Sitemap";
 import { Link } from "react-router-dom";
 import Footer from "../parts/Footer";
+import Documents from "../parts/Document";
 
 export default function Congratulations() {
   return (
-    <>
+    <Documents>
       <Header theme="black" />
       <BreadCrumb
         list={[
@@ -42,6 +43,6 @@ export default function Congratulations() {
       </section>
       <Sitemap />
       <Footer />
-    </>
+    </Documents>
   );
 }

@@ -10,12 +10,12 @@ import Footer from "../parts/Footer";
 // Hooks
 import useScrollAnchor from "../helpers/hooks/useScrollAnchor";
 import useModalDOM from "../helpers/hooks/useModalDOM";
+import useScrollToTop from "../helpers/hooks/useScrollToTop";
+import Documents from "../parts/Document";
 
 export default function HomePage() {
-  useScrollAnchor();
-  useModalDOM();
   return (
-    <>
+    <Documents>
       <Header theme="white" position="absolute" />
       <Hero />
       <BrowseRoom />
@@ -23,6 +23,6 @@ export default function HomePage() {
       <Clients />
       <Sitemap />
       <Footer />
-    </>
+    </Documents>
   );
 }

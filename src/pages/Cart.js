@@ -2,13 +2,14 @@ import React from "react";
 import BreadCrumb from "../components/Breadcrumb";
 import ShippingDetails from "../parts/Cart/ShippingDetails";
 import ShoppingCart from "../parts/Cart/ShoppingCart";
+import Documents from "../parts/Document";
 import Footer from "../parts/Footer";
 import Header from "../parts/Header";
 import Sitemap from "../parts/HomePage/Sitemap";
 
 export default function Cart() {
   return (
-    <>
+    <Documents>
       <Header theme="black" />
       <BreadCrumb
         list={[
@@ -26,6 +27,6 @@ export default function Cart() {
       </section>
       <Sitemap />
       <Footer />
-    </>
+    </Documents>
   );
 }

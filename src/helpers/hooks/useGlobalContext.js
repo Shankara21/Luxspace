@@ -14,6 +14,7 @@ export function useGlobalContext() {
   return { state, dispatch };
 }
 function Reducer(state, action) {
+  console.log(state.cart);
   switch (action.type) {
     case "ADD_TO_CART":
       return {
@@ -24,6 +25,22 @@ function Reducer(state, action) {
               [action.item.id]: action.item,
             }
           : { [action.item.id]: action.item },
+      };
+    case "REMOVE_FROM_CART":
+      return {
+        ...state,
+        cart: Object.keys(state.cart)
+          .filter((key) => +key !== +action.id)
+          .reduce((acc, key) => {
+            const item = state.cart[key];
+            acc[item.id] = item;
+            return acc;
+          }, {}),
+      };
+    case "RESET_CART":
+      return {
+        ...state,
+        cart: initialState,
       };
 
     default:
